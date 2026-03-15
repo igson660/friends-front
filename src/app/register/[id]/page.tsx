@@ -29,7 +29,6 @@ export default function RegisterPage() {
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(personSchema),
-
     defaultValues: {
       name: "",
       mother_name: "",
@@ -39,7 +38,6 @@ export default function RegisterPage() {
       email: "",
       parent,
       phone: "",
-
       address: {
         zip_code: "",
         address: "",
@@ -52,8 +50,7 @@ export default function RegisterPage() {
     },
   });
 
-  const { handleCepChange, loading: loadingCep } =
-    useCepAutoFill<FormData>(setValue);
+  const { handleCepChange } = useCepAutoFill<FormData>(setValue);
 
   const onSubmit = async (data: FormData) => {
     const payload = {
@@ -71,7 +68,6 @@ export default function RegisterPage() {
     <div className="min-h-screen flex items-center justify-center p-4 bg-[var(--color-bg-base)]">
       <div className="w-full max-w-xl">
         {/* Header */}
-
         <div className="text-center mb-8">
           <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 bg-gradient-to-br from-amber-500 to-amber-600">
             <Users size={26} className="text-black" />
@@ -130,7 +126,7 @@ export default function RegisterPage() {
 
           <FormField
             label="Data de nascimento"
-            error={errors.cpf?.message}
+            error={errors.birth_date?.message}
             required
           >
             <Controller
@@ -148,7 +144,7 @@ export default function RegisterPage() {
             />
           </FormField>
 
-          <FormField label="Email" error={errors.email?.message}>
+          <FormField label="Email" error={errors.email?.message} required>
             <input
               {...register("email")}
               type="email"
@@ -157,7 +153,7 @@ export default function RegisterPage() {
             />
           </FormField>
 
-          <FormField label="Telefone">
+          <FormField label="Telefone" error={errors.phone?.message} required>
             <Controller
               name="phone"
               control={control}
@@ -176,27 +172,27 @@ export default function RegisterPage() {
           </FormField>
 
           <div className="grid grid-cols-2 gap-3">
-            <FormField label="CEP">
+            <FormField
+              label="CEP"
+              error={errors.address?.zip_code?.message}
+              required
+            >
               <Controller
                 control={control}
                 name="address.zip_code"
                 render={({ field }) => (
-                  <div className="flex flex-col">
-                    <IMaskInput
-                      {...field}
-                      mask="00000-000"
-                      placeholder="CEP"
-                      onAccept={value => {
-                        field.onChange(value);
-                        handleCepChange(value);
-                      }}
-                      className={`w-full rounded-lg border p-2 ${
-                        errors.address?.zip_code
-                          ? "border-red-500"
-                          : "border-gray-300"
-                      }`}
-                    />
-                  </div>
+                  <IMaskInput
+                    {...field}
+                    mask="00000-000"
+                    placeholder="CEP"
+                    onAccept={value => {
+                      field.onChange(value);
+                      handleCepChange(value);
+                    }}
+                    className={`input ${
+                      errors.address?.zip_code ? "border-red-500" : ""
+                    }`}
+                  />
                 )}
               />
             </FormField>
@@ -210,7 +206,11 @@ export default function RegisterPage() {
             </FormField>
           </div>
 
-          <FormField label="Endereço">
+          <FormField
+            label="Endereço"
+            error={errors.address?.address?.message}
+            required
+          >
             <input
               {...register("address.address")}
               className="input"
@@ -226,11 +226,19 @@ export default function RegisterPage() {
           </FormField>
 
           <div className="grid grid-cols-2 gap-3">
-            <FormField label="Cidade">
+            <FormField
+              label="Cidade"
+              error={errors.address?.city?.message}
+              required
+            >
               <input {...register("address.city")} className="input" />
             </FormField>
 
-            <FormField label="Estado">
+            <FormField
+              label="Estado"
+              error={errors.address?.state?.message}
+              required
+            >
               <input
                 {...register("address.state")}
                 className="input"
