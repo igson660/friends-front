@@ -8,6 +8,14 @@ build/
 *.dist
 .next
 
+node_modules/
+.next/
+dist/
+build/
+
+.env
+.env.local
+
 node_modules
 
 # Environment variables
