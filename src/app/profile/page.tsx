@@ -33,7 +33,7 @@ export default function ProfilePage() {
         </div>
 
         <div>
-          <span className="text-sm text-gray-500">Nome</span>
+          <span className="text-sm text-gray-500">Mãe</span>
           <p className="font-medium">{user.mother_name}</p>
         </div>
 
@@ -62,10 +62,10 @@ export default function ProfilePage() {
           <p className="font-medium">{user.status}</p>
         </div>
 
-        <div>
+        {/* <div>
           <span className="text-sm text-gray-500">Parent</span>
           <p className="font-medium">{user.parent ?? "—"}</p>
-        </div>
+        </div> */}
       </div>
     </DashboardLayout>
   );
