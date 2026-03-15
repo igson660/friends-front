@@ -7,14 +7,14 @@ import AbortAddon from "wretch/addons/abort";
 import { IWretchMiddlewareOptions } from "@/shared/types/models/wretchMiddleware.model";
 
 import {
-  DEV_API_URL,
-  // PROD_API_URL,
+  // DEV_API_URL,
+  PROD_API_URL,
   SESSION_COOKIE_KEY,
 } from "./constants";
 
 const notAuthNeededEndpoints = [
-  `${DEV_API_URL}/login/`,
-  `${DEV_API_URL}/register/`,
+  `${PROD_API_URL}/login/`,
+  `${PROD_API_URL}/register/`,
 ];
 
 const wretchMiddleware =
@@ -22,8 +22,8 @@ const wretchMiddleware =
   (
     next: (
       url: string,
-      options: IWretchMiddlewareOptions,
-    ) => Promise<WretchResponse>,
+      options: IWretchMiddlewareOptions
+    ) => Promise<WretchResponse>
   ) =>
   (url: string, options: WretchOptions) => {
     const { [SESSION_COOKIE_KEY!]: token } = parseCookies();
@@ -38,6 +38,6 @@ const wretchMiddleware =
     return next(url, options);
   };
 
-export const api = wretch(DEV_API_URL)
+export const api = wretch(PROD_API_URL)
   .middlewares([wretchMiddleware()])
   .addon(AbortAddon());
