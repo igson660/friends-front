@@ -1,0 +1,50 @@
+{
+  "name": "confradac-dashboard",
+  "version": "1.0.0",
+  "description": "Dashboard da CONFRADAC - Federação de Igrejas",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "@tanstack/react-query": "^5.51.21",
+    "axios": "^1.12.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.453.0",
+    "nookies": "^2.5.2",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "react-hook-form": "^7.71.1",
+    "react-hot-toast": "^2.6.0",
+    "react-imask": "^7.6.1",
+    "react-select": "^5.10.2",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4.1.14",
+    "typescript": "^5.6.3",
+    "wretch": "^3.0.6",
+    "zod": "^4.3.6",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/node": "^24.7.0",
+    "@types/react": "^19.2.1",
+    "@types/react-dom": "^19.2.1",
+    "@types/react-select": "^5.0.1",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^16.0.0",
+    "next": "16",
+    "postcss": "^8.4.47",
+    "prettier": "^3.6.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
