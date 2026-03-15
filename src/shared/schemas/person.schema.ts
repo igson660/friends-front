@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const personSchema = z.object({
   name: z.string().min(3),
+  mother_name: z.string().min(3),
   cpf: z.string().min(11),
   birth_date: z.string(),
 

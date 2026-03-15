@@ -28,13 +28,13 @@ export default function ProfilePage() {
 
       <div className="card p-6 max-w-xl space-y-4">
         <div>
-          <span className="text-sm text-gray-500">ID</span>
-          <p className="font-medium">{user.id}</p>
+          <span className="text-sm text-gray-500">Nome</span>
+          <p className="font-medium">{user.name}</p>
         </div>
 
         <div>
           <span className="text-sm text-gray-500">Nome</span>
-          <p className="font-medium">{user.name}</p>
+          <p className="font-medium">{user.mother_name}</p>
         </div>
 
         <div>

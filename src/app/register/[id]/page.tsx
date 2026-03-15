@@ -32,6 +32,7 @@ export default function RegisterPage() {
 
     defaultValues: {
       name: "",
+      mother_name: "",
       cpf: "",
       birth_date: "",
       status: "active",
@@ -99,6 +100,18 @@ export default function RegisterPage() {
             />
           </FormField>
 
+          <FormField
+            label="Nome completo da mãe"
+            error={errors.mother_name?.message}
+            required
+          >
+            <input
+              {...register("mother_name")}
+              className="input"
+              placeholder="Maria da Silva"
+            />
+          </FormField>
+
           <FormField label="CPF" error={errors.cpf?.message} required>
             <Controller
               name="cpf"
@@ -154,7 +167,7 @@ export default function RegisterPage() {
                   className="input"
                   placeholder="Telefone"
                   value={field.value ?? ""}
-                  onAccept={(value) => field.onChange(value)}
+                  onAccept={value => field.onChange(value)}
                   onBlur={field.onBlur}
                   inputRef={field.ref}
                 />
@@ -173,7 +186,7 @@ export default function RegisterPage() {
                       {...field}
                       mask="00000-000"
                       placeholder="CEP"
-                      onAccept={(value) => {
+                      onAccept={value => {
                         field.onChange(value);
                         handleCepChange(value);
                       }}

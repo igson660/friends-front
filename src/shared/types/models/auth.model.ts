@@ -6,6 +6,7 @@ export interface IPersonAuth extends IPerson {
   readonly phone: string;
   readonly parent: string;
   readonly birth_date: string;
+  readonly mother_name: string;
 }
 
 export interface ICredentials {
