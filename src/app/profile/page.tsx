@@ -18,6 +18,16 @@ export default function ProfilePage() {
     );
   }
 
+  const fields = [
+    { label: "Nome", value: user.name },
+    { label: "Mãe", value: user.mother_name },
+    { label: "Data de nascimento", value: user.birth_date },
+    { label: "Email", value: user.email },
+    { label: "CPF", value: user.cpf },
+    { label: "Telefone", value: user.phone },
+    { label: "Status", value: user.status },
+  ];
+
   return (
     <DashboardLayout>
       <PageHeader
@@ -27,45 +37,12 @@ export default function ProfilePage() {
       />
 
       <div className="card p-6 max-w-xl space-y-4">
-        <div>
-          <span className="text-sm text-gray-500">Nome</span>
-          <p className="font-medium">{user.name}</p>
-        </div>
-
-        <div>
-          <span className="text-sm text-gray-500">Mãe</span>
-          <p className="font-medium">{user.mother_name}</p>
-        </div>
-
-        <div>
-          <span className="text-sm text-gray-500">Data de nascimento</span>
-          <p className="font-medium">{user.birth_date}</p>
-        </div>
-
-        <div>
-          <span className="text-sm text-gray-500">Email</span>
-          <p className="font-medium">{user.email}</p>
-        </div>
-
-        <div>
-          <span className="text-sm text-gray-500">CPF</span>
-          <p className="font-medium">{user.cpf}</p>
-        </div>
-
-        <div>
-          <span className="text-sm text-gray-500">Telefone</span>
-          <p className="font-medium">{user.phone}</p>
-        </div>
-
-        <div>
-          <span className="text-sm text-gray-500">Status</span>
-          <p className="font-medium">{user.status}</p>
-        </div>
-
-        {/* <div>
-          <span className="text-sm text-gray-500">Parent</span>
-          <p className="font-medium">{user.parent ?? "—"}</p>
-        </div> */}
+        {fields.map(field => (
+          <div key={field.label}>
+            <span className="text-sm text-gray-500">{field.label}</span>
+            <p className="font-medium">{field.value}</p>
+          </div>
+        ))}
       </div>
     </DashboardLayout>
   );

@@ -1,5 +1,5 @@
 import { INetworkNode } from "@/shared/types/models/networkNode.model";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight, User } from "lucide-react";
 import { useState } from "react";
 
 const voterStatusBadge = (status?: string, valid?: boolean) => {
@@ -15,13 +15,6 @@ const voterStatusLabel = (status?: string) => {
   return status;
 };
 
-const getInitials = (name: string) =>
-  name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase();
-
 export function NodeCard({
   node,
   depth = 0,
@@ -30,21 +23,24 @@ export function NodeCard({
   depth?: number;
 }) {
   const [open, setOpen] = useState(depth < 2);
-  const hasChildren = node.children.length > 0;
+
+  const hasChildren = node.children?.length > 0;
+  const toggle = () => hasChildren && setOpen(o => !o);
 
   return (
-    <div style={{ marginLeft: depth > 0 ? "24px" : "0" }}>
+    <div className="w-full" style={{ paddingLeft: depth * 20 }}>
       <div
-        className="card mb-2 flex items-center gap-3 p-3 cursor-pointer transition-all hover:border-[var(--color-gold-500)]/30"
+        onClick={toggle}
+        className="card mb-2 flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all hover:border-[var(--color-gold-500)]/30 active:scale-[0.99]"
         style={{
           borderColor:
             depth === 0 ? "rgba(245,158,11,0.35)" : "var(--color-border)",
         }}
-        onClick={() => hasChildren && setOpen((o) => !o)}
       >
-        <div className="shrink-0 w-4">
-          {hasChildren ? (
-            open ? (
+        {/* Expand icon */}
+        <div className="w-4 shrink-0 flex justify-center">
+          {hasChildren &&
+            (open ? (
               <ChevronDown
                 size={14}
                 style={{ color: "var(--color-text-muted)" }}
@@ -54,10 +50,10 @@ export function NodeCard({
                 size={14}
                 style={{ color: "var(--color-text-muted)" }}
               />
-            )
-          ) : null}
+            ))}
         </div>
 
+        {/* Avatar */}
         <div
           className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
           style={{
@@ -65,9 +61,10 @@ export function NodeCard({
             color: "#0a0a0f",
           }}
         >
-          {getInitials(node.name)}
+          <User />
         </div>
 
+        {/* Info */}
         <div className="flex-1 min-w-0">
           <p
             className="text-sm font-medium truncate"
@@ -75,6 +72,7 @@ export function NodeCard({
           >
             {node.name}
           </p>
+
           <p
             className="text-xs truncate"
             style={{ color: "var(--color-text-secondary)" }}
@@ -85,20 +83,26 @@ export function NodeCard({
           </p>
         </div>
 
+        {/* Status */}
         <div className="flex items-center gap-2 shrink-0">
           <span
-            className={`badge ${voterStatusBadge(node.voter_verification_status, node.is_voter_valid)}`}
+            className={`badge ${voterStatusBadge(
+              node.voter_verification_status,
+              node.is_voter_valid
+            )}`}
           >
             {node.is_voter_valid
               ? "✓"
               : voterStatusLabel(node.voter_verification_status)}
           </span>
+
           <span
             className="text-xs"
             style={{ color: "var(--color-text-muted)" }}
           >
             N{node.network_level ?? 0}
           </span>
+
           {hasChildren && (
             <span className="badge badge-blue">{node.children.length}</span>
           )}
@@ -108,7 +112,7 @@ export function NodeCard({
       {/* Children */}
       {open &&
         hasChildren &&
-        node.children.map((child) => (
+        node.children.map(child => (
           <NodeCard key={child.id} node={child} depth={depth + 1} />
         ))}
     </div>

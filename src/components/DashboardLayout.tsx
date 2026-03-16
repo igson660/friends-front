@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Sidebar from "./Sidebar";
@@ -43,11 +44,14 @@ export default function DashboardLayout({ children }: Props) {
 
   return (
     <div
-      className="flex min-h-screen"
+      className="min-h-screen lg:flex"
       style={{ background: "var(--color-bg-base)" }}
     >
+      {/* Sidebar */}
       <Sidebar />
-      <main className="flex-1 overflow-auto p-6 animate-fade-in">
+
+      {/* Conteúdo */}
+      <main className="flex-1 p-4 lg:p-6 overflow-auto animate-fade-in lg:ml-60">
         {children}
       </main>
     </div>

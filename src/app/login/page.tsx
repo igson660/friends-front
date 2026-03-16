@@ -28,8 +28,8 @@ function ptDateToISO(date: string) {
 export default function LoginPage() {
   usePublicRoute();
 
-  const { login, isAuthenticated, loading } = useAuth();
   const router = useRouter();
+  const { login, isAuthenticated, loading } = useAuth();
 
   const {
     handleSubmit,
@@ -40,7 +40,9 @@ export default function LoginPage() {
   });
 
   useEffect(() => {
-    if (isAuthenticated) router.replace("/dashboard");
+    if (isAuthenticated) {
+      router.replace("/dashboard");
+    }
   }, [isAuthenticated, router]);
 
   const onSubmit = async (data: FormData) => {
@@ -57,34 +59,40 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-neutral-950">
+    <main className="min-h-screen bg-neutral-950 flex items-center justify-center px-5 py-10">
       <div className="w-full max-w-sm">
-        <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 bg-amber-500">
-            <Users size={28} className="text-black" />
+        {/* HEADER */}
+        <header className="text-center mb-10">
+          <div className="w-16 h-16 bg-amber-500 rounded-3xl flex items-center justify-center mx-auto mb-5 shadow-lg">
+            <Users size={30} className="text-black" />
           </div>
 
-          <h1 className="text-3xl font-bold text-white">AMIGOS</h1>
-          <p className="text-sm text-neutral-400 mt-1">Rede de Pessoas</p>
-        </div>
+          <h1 className="text-3xl font-bold text-white tracking-tight">
+            AMIGOS
+          </h1>
 
-        <div className="bg-neutral-900 rounded-xl p-6 shadow-xl">
-          <h2 className="text-lg font-semibold text-white mb-5">
+          <p className="text-sm text-neutral-400 mt-2">Rede de Pessoas</p>
+        </header>
+
+        {/* CARD */}
+        <section className="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 shadow-2xl">
+          <h2 className="text-lg font-semibold text-white mb-6">
             Entrar na plataforma
           </h2>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {/* CPF */}
             <FormField label="CPF" error={errors.cpf?.message} required>
               <IMaskInput
                 mask="000.000.000-00"
                 placeholder="000.000.000-00"
-                className="w-full rounded-md bg-neutral-800 border border-neutral-700 px-3 py-2 text-sm text-white"
-                onAccept={(value) => setValue("cpf", value)}
+                inputMode="numeric"
+                className="w-full h-12 rounded-lg bg-neutral-800 border border-neutral-700 px-4 text-sm text-white outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                onAccept={value => setValue("cpf", value)}
               />
             </FormField>
 
-            {/* DATA */}
+            {/* DATA DE NASCIMENTO */}
             <FormField
               label="Data de nascimento"
               error={errors.birth_Date?.message}
@@ -93,34 +101,40 @@ export default function LoginPage() {
               <IMaskInput
                 mask="00/00/0000"
                 placeholder="dd/mm/aaaa"
-                className="w-full rounded-md bg-neutral-800 border border-neutral-700 px-3 py-2 text-sm text-white"
-                onAccept={(value) => setValue("birth_Date", value)}
+                inputMode="numeric"
+                className="w-full h-12 rounded-lg bg-neutral-800 border border-neutral-700 px-4 text-sm text-white outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                onAccept={value => setValue("birth_Date", value)}
               />
             </FormField>
 
+            {/* BOTÃO */}
             <button
               type="submit"
               disabled={isSubmitting || loading}
-              className="w-full bg-amber-500 hover:bg-amber-600 text-black font-medium py-2 rounded-md flex items-center justify-center gap-2"
+              className="w-full h-12 bg-amber-500 hover:bg-amber-600 active:scale-[0.98] transition rounded-lg text-black font-semibold flex items-center justify-center gap-2"
             >
               {isSubmitting || loading ? (
                 <>
-                  <Loader2 size={15} className="animate-spin" /> Entrando...
+                  <Loader2 size={18} className="animate-spin" />
+                  Entrando...
                 </>
               ) : (
                 "Entrar"
               )}
             </button>
           </form>
-        </div>
+        </section>
 
-        <p className="text-center text-xs text-neutral-500 mt-6">
-          Não tem conta?{" "}
-          <span className="text-amber-500">
-            Solicite um convite a um membro da rede.
-          </span>
-        </p>
+        {/* FOOTER */}
+        <footer className="text-center mt-8">
+          <p className="text-xs text-neutral-500 leading-relaxed">
+            Não tem conta?{" "}
+            <span className="text-amber-500 font-medium">
+              Solicite um convite a um membro da rede.
+            </span>
+          </p>
+        </footer>
       </div>
-    </div>
+    </main>
   );
 }
