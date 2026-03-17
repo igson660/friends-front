@@ -4,6 +4,11 @@ import DashboardLayout from "@/components/DashboardLayout";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { User } from "lucide-react";
 import { useAuth } from "@/shared/providers/auth.providers";
+import {
+  formatDateFromISO,
+  formatPhone,
+  formatCPF,
+} from "@/shared/utils/formatData";
 
 export default function ProfilePage() {
   const { user } = useAuth();
@@ -21,10 +26,10 @@ export default function ProfilePage() {
   const fields = [
     { label: "Nome", value: user.name },
     { label: "Mãe", value: user.mother_name },
-    { label: "Data de nascimento", value: user.birth_date },
+    { label: "Data de nascimento", value: formatDateFromISO(user.birth_date) },
     { label: "Email", value: user.email },
-    { label: "CPF", value: user.cpf },
-    { label: "Telefone", value: user.phone },
+    { label: "CPF", value: formatCPF(user.cpf) },
+    { label: "Telefone", value: formatPhone(user.phone) },
     { label: "Status", value: user.status },
   ];
 
