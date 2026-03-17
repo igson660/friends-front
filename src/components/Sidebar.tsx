@@ -12,6 +12,7 @@ import {
   ChevronRight,
   Menu,
   X,
+  UserRoundPlus,
 } from "lucide-react";
 
 import { useAuth } from "@/shared/providers/auth.providers";
@@ -20,6 +21,7 @@ const NAV = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/network", label: "Minha Rede", icon: GitBranch },
   { href: "/profile", label: "Perfil", icon: User },
+  { href: "/create", label: "Cadastro", icon: UserRoundPlus },
 ];
 
 export default function Sidebar() {
