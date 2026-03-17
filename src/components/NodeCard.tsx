@@ -22,7 +22,7 @@ export function NodeCard({
   node: INetworkNode;
   depth?: number;
 }) {
-  const [open, setOpen] = useState(depth < 2);
+  const [open, setOpen] = useState(false);
 
   const hasChildren = node.children?.length > 0;
   const toggle = () => hasChildren && setOpen(o => !o);
