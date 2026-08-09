@@ -208,7 +208,7 @@ export default function RegisterPage() {
               <input {...register("address.address")} className="input" />
             </FormField>
 
-            <FormField label="Complemento">
+            <FormField label="Bairro">
               <input
                 {...register("address.address_complement")}
                 className="input"
