@@ -218,7 +218,12 @@ export default function RegisterPage() {
             />
           </FormField>
 
-          <FormField label="Complemento">
+          <FormField
+          
+            label="Bairro"
+               error={errors.address?.address_complement?.message}
+              required
+            >
             <input
               {...register("address.address_complement")}
               className="input"
