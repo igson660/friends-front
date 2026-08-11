@@ -24,7 +24,7 @@ export const personSchema = z.object({
 
     address_number: z.string(),
 
-    address_complement: z.string().optional().max(20, "Maximo 20 caracteres"),
+    address_complement: z.string().max(20, "Maximo 20 caracteres"),
 
     city: z.string().min(2, "Cidade obrigatória"),
 
