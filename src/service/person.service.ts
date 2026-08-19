@@ -7,7 +7,7 @@ import {
 } from "@/shared/types/models/person.model";
 
 export const listNetWorkRequest = async (
-  id: string,
+  id: string
 ): Promise<IPersonResponse> => {
   try {
     return await api.url(`people/${id}`).get().json<IPersonResponse>();
@@ -18,10 +18,9 @@ export const listNetWorkRequest = async (
 };
 
 export const createPersonRequest = async (
-  data: IPersonCreate,
+  data: IPersonCreate
 ): Promise<IPersonResponse> => {
   try {
-    toast.success("membro cadastrada com sucesso");
     return await api.url("people/").post(data).json<IPersonResponse>();
   } catch {
     toast.error("Erro ao cadastrar membro.");
