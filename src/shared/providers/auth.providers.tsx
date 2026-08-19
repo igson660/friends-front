@@ -21,6 +21,9 @@ import { tokenStorage } from "@/shared/utils/storage";
 
 const AuthContext = createContext<IAuthContextData | null>(null);
 
+// 30 minutos em milissegundos.
+const SESSION_TIMEOUT = 30 * 60 * 1000;
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
 
@@ -30,15 +33,42 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const token = tokenStorage.getAccess();
-    const user = tokenStorage.getUser();
+    const storedUser = tokenStorage.getUser();
 
-    if (token && user) {
-      setUser(JSON.parse(user));
-      setIsAuthenticated(true);
+    if (token && storedUser) {
+      try {
+        // storedUser é string | null; a validação acima garante que é string aqui.
+        const parsedUser = JSON.parse(storedUser) as IPersonAuth;
+
+        setUser(parsedUser);
+        setIsAuthenticated(true);
+      } catch {
+        // Remove uma sessão caso o usuário armazenado esteja inválido.
+        tokenStorage.clear();
+        setUser(null);
+        setIsAuthenticated(false);
+      }
     }
 
     setLoading(false);
   }, []);
+
+  // Expira a sessão após 30 minutos e redireciona para o login.
+  useEffect(() => {
+    if (!isAuthenticated) {
+      return;
+    }
+
+    const timeoutId: ReturnType<typeof setTimeout> = setTimeout(() => {
+      tokenStorage.clear();
+      setUser(null);
+      setIsAuthenticated(false);
+      router.replace("/login");
+    }, SESSION_TIMEOUT);
+
+    // Cancela o timer anterior quando o usuário sair ou o componente desmontar.
+    return () => clearTimeout(timeoutId);
+  }, [isAuthenticated, router]);
 
   const login = async (credentials: ICredentials) => {
     setLoading(true);
