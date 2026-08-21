@@ -12,6 +12,7 @@ import { personSchema } from "@/shared/schemas/person.schema";
 import { useCepAutoFill } from "@/shared/hooks/useCep";
 import { cleanCharacter, formatDateToISO } from "@/shared/utils/formatData";
 import { createPersonRequest } from "@/service/person.service";
+import toast from "react-hot-toast";
 
 type FormData = z.infer<typeof personSchema>;
 
@@ -60,8 +61,14 @@ export default function RegisterPage() {
       cpf: cleanCharacter(data.cpf),
     };
 
-    await createPersonRequest(payload);
-    router.push("/dashboard");
+    try {
+      await createPersonRequest(payload);
+      toast.success("Cadastro realizado!");
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Erro ao cadastrar membro:", error);
+      toast.error("Erro ao cadastrar membro.");
+    }
   };
 
   return (
@@ -219,11 +226,10 @@ export default function RegisterPage() {
           </FormField>
 
           <FormField
-          
             label="Bairro"
-               error={errors.address?.address_complement?.message}
-              required
-            >
+            error={errors.address?.address_complement?.message}
+            required
+          >
             <input
               {...register("address.address_complement")}
               className="input"

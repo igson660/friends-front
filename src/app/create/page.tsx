@@ -63,16 +63,14 @@ export default function RegisterPage() {
       cpf: cleanCharacter(data.cpf),
     };
 
-    const promise = createPersonRequest(payload);
-
-    toast.promise(promise, {
-      loading: "Salvando...",
-      success: "Cadastro realizado!",
-      error: "Erro ao cadastrar",
-    });
-
-    await promise;
-    router.push("/dashboard");
+    try {
+      await createPersonRequest(payload);
+      toast.success("Cadastro realizado!");
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Erro ao cadastrar membro:", error);
+      toast.error("Erro ao cadastrar membro.");
+    }
   };
 
   return (
@@ -210,9 +208,9 @@ export default function RegisterPage() {
 
             <FormField
               label="Bairro"
-               error={errors.address?.address_complement?.message}
+              error={errors.address?.address_complement?.message}
               required
-              >
+            >
               <input
                 {...register("address.address_complement")}
                 className="input"

@@ -23,7 +23,6 @@ export const createPersonRequest = async (
   try {
     return await api.url("people/").post(data).json<IPersonResponse>();
   } catch {
-    toast.error("Erro ao cadastrar membro.");
     throw new Error("CREATE_MEMBER_ERROR");
   }
 };
